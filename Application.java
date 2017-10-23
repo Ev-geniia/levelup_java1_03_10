@@ -1,48 +1,49 @@
+package hometask;
 
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
 
-        Laptop[] laptops = new Laptop[5];
-        laptops[0] = new Laptop(123.5, 2.0);
-        laptops[1] = new Laptop(250.85, 1.75);
-        laptops[2] = new Laptop(999.99, 1.5);
-        laptops[3] = new Laptop(749.99, 2.5);
-        laptops[4] = new Laptop(500.75, 3.3);
+        InMemoryUserStorage storage = new InMemoryUserStorage ();
+        PermissionService permission = new PermissionService(storage);
+        LocalStorage authUsersStorage = LocalStorage.createLocalStorage();
 
-        User[] users = new User[5];
-        users[0] = new User("Friedrich", "Nietzsche");
-        users[1] = new User("Sigmund", "Freud");
-        users[2] = new User("Immanuel", "Kant");
-        users[3] = new User("Karl", "Marx");
-        users[4] = new User("Martin", "Heidegger");
+        System.out.println(storage);
 
-        System.out.println("Before sorting:");
+        storage.addUser("Ivan", "Ivanov", "password1");
+        storage.addUser("Ivan", "Ivanov", "password2");
+        storage.addUser("Ivan", "Ivanov", "password3");
+        storage.addUser("Petr", "Petrov", "password4");
+        storage.addUser("Petr", "Petrov", "password5");
+        storage.addUser("Sergey", "Sergeyev", "password6");
+        storage.addUser("Sergey", "Sergeyev", "password7");
+        storage.addUser("Sergey", "Sergeyev", "password8");
+        storage.addUser("Alexey", "Alexeyev", "password9");
+        storage.addUser("Alexey", "Alexeyev", "password10");
+        System.out.println(storage);
 
-        for (int i = 0; i < laptops.length; i++) {
-            System.out.println(laptops[i]);
+        User [] usersList =  storage.getUsers();
+        storage.removeUser(usersList[0].getLogin());
+        System.out.println(storage);
+
+        Scanner sc = new Scanner (System.in);
+        System.out.println("Please enter your login");
+        String login = sc.nextLine();
+        System.out.println("'" + login + "'");
+        System.out.println("Please enter your password");
+        String password = sc.nextLine();
+        System.out.println("'" + password + "'");
+
+        boolean auth = permission.Authenticate(login, password);
+        System.out.println(auth);
+        if (auth == true){
+            User authUser = storage.findByLogin(login);
+            authUsersStorage.StoreUser(authUser);
+            System.out.println("User successfully logged in: " + authUser);
+        } else {
+            System.out.println("Wrong data entered");
         }
-        for (int i = 0; i < users.length; i++) {
-            System.out.println(users[i]);
-        }
-
-        Arrays.sort(laptops, (o1, o2) -> {
-                    double p1 = o1.getPrice();
-                    double p2 = o2.getPrice();
-
-                    int compare = Double.compare(p1, p2);
-                    return compare;
-                }
-        );
-
-        System.out.println("After sorting:");
-
-        for (int i = 0; i < laptops.length; i++) {
-            System.out.println(laptops[i]);
-        }
-
 
     }
-
 }

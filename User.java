@@ -1,14 +1,26 @@
+package hometask;
+
 public class User {
+    private String login;
     private String name;
     private String lastName;
+    private String password;
+    private long id;
 
-    //constructor with params
-    public User(String name, String lastName) {
+    public User(String login, String name, String lastName, String password, long id) {
+        this.login = login;
         this.name = name;
         this.lastName = lastName;
+        this.password = password;
+        this.id = id;
     }
-    //constructor without params
-    User () {
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getName() {
@@ -27,11 +39,30 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "login='" + login + '\'' +
+                ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
